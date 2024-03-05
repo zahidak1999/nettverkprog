@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Kjør JavaScript-kode</title>
+</head>
+<body>
+    <textarea id="code" rows="10" cols="50">console.log('Hello, World!');</textarea><br>
+    <button onclick="runCode()">Kjør Kode</button>
+    <pre id="result"></pre>
+
+    <script>
+        async function runCode() {
+            const response = await fetch('/run', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({code: document.getElementById('code').value})
+            });
+            const data = await response.json();
+            document.getElementById('result').textContent = data.result || data.error;
+        }
+    </script>
+</body>
+</html>
